@@ -4,7 +4,9 @@ import { Container, Row } from "react-bootstrap";
 const Input = () => {
   const submitTodo = (event) => {
     event.preventDefault();
-    console.log("hii");
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData);
+    console.log(data);
   };
   return (
     <Container fluid>
@@ -15,17 +17,16 @@ const Input = () => {
               <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-6">
                 <div className="sm:col-span-2">
                   <label
-                    htmlFor="first-name"
+                    htmlFor="name"
                     className="block text-sm font-medium leading-6 text-white text-left"
                   >
-                    First name
+                    Name
                   </label>
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="given-name"
+                      name="name"
+                      id="name"
                       className="block pl-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -33,17 +34,16 @@ const Input = () => {
 
                 <div className="sm:col-span-2">
                   <label
-                    htmlFor="last-name"
+                    htmlFor="description"
                     className="block text-sm font-medium leading-6 text-white text-left"
                   >
-                    Last name
+                    Description
                   </label>
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
+                      name="description"
+                      id="description"
                       className="block pl-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>

@@ -15,8 +15,9 @@ const TodoList = () => {
         <Col className="text-left">
           {complete ? (
             <>
-            <s className="text-[1.5rem] text-gray-400 py-2">Task 1</s><br />
-            <s className="text-gray-400 py-3">This is first Task</s>
+              <s className="text-[1.5rem] text-gray-400 py-2">Task 1</s>
+              <br />
+              <s className="text-gray-400 py-3">This is first Task</s>
             </>
           ) : (
             <>
