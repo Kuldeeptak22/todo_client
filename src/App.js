@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-gray-500 h-[100vh]">
       <Todo />
     </div>
   );
