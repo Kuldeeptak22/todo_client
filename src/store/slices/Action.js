@@ -39,10 +39,14 @@ export const deleteTodoAction = createAsyncThunk(
 
 export const updateTodoAction = createAsyncThunk(
   "updateTodo",
-  async (todo_id, { rejectWithValue }) => {
+  async (requestData, { rejectWithValue }) => {
+    console.log("requestData", requestData);
     try {
-      const { data } = await instance.put(`/todos/update_todo/${todo_id}`);
-      return data;
+      const { data: responseData } = await instance.put(
+        `/todos/update_todo/${requestData?.id}`,
+        requestData?.data
+      );
+      return { id: requestData?.id, updatedData: responseData };
     } catch (error) {
       return rejectWithValue(error);
     }
