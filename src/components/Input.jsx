@@ -9,29 +9,30 @@ import {
 } from "../store/slices/Action";
 
 const Input = ({ edit }) => {
-  const [todo, setTodo] = useState(null);
+  const [useEdit, setUseEdit] = useState(false);
+  const [todo, setTodo] = useState({ name: "", description: "" });
   const dispatch = useDispatch();
 
   const selectFilteredTodos = createSelector(
     (state) => state.todos.todos.data,
     (todos) => todos?.filter((todo) => todo._id === edit)
   );
-  const { success } = useSelector((state) => state?.todos);
 
   const filteredTodos = useSelector(selectFilteredTodos);
 
   const submitTodo = (event) => {
-    const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData);
-    setTodo(data);
+    event.preventDefault();
 
-    if (data) {
+    if (todo.name && todo.description) {
       if (edit) {
-        dispatch(updateTodoAction({ data, id: edit }));
-        event.currentTarget.reset();
+        dispatch(updateTodoAction({ data: todo, id: edit }));
+        setTodo({ name: "", description: "" });
+        setUseEdit(false);
+        dispatch(getTodosAction());
       } else {
-        dispatch(addTodoAction(data));
-        event.currentTarget.reset();
+        dispatch(addTodoAction(todo));
+        setTodo({ name: "", description: "" });
+        dispatch(getTodosAction());
       }
     }
   };
@@ -43,14 +44,12 @@ const Input = ({ edit }) => {
   }, [edit]);
 
   useEffect(() => {
-    if (success) {
-      dispatch(getTodosAction());
-    }
-  }, [success, dispatch]);
-
-  useEffect(() => {
     dispatch(getTodosAction());
   }, [dispatch]);
+
+  useEffect(() => {
+    setUseEdit(edit ? true : false);
+  }, [edit]);
 
   return (
     <Container fluid>
@@ -72,7 +71,10 @@ const Input = ({ edit }) => {
                       name="name"
                       id="name"
                       required
-                      defaultValue={todo?.name || ""}
+                      value={todo?.name}
+                      onChange={(e) =>
+                        setTodo({ ...todo, name: e.target.value })
+                      }
                       className="block pl-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -91,7 +93,10 @@ const Input = ({ edit }) => {
                       name="description"
                       id="description"
                       required
-                      defaultValue={todo?.description || ""}
+                      value={todo?.description}
+                      onChange={(e) =>
+                        setTodo({ ...todo, description: e.target.value })
+                      }
                       className="block pl-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -102,7 +107,7 @@ const Input = ({ edit }) => {
                     type="submit"
                     className="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    {edit ? "Update Todo" : "Add Todo"}
+                    {useEdit ? "Update Todo" : "Add Todo"}
                   </button>
                 </div>
               </div>

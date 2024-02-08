@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTodoAction,
-  getTodosAction,
-} from "../store/slices/Action";
+import { deleteTodoAction, getTodosAction } from "../store/slices/Action";
 import { FaRegEdit } from "react-icons/fa";
 import Input from "./Input";
 
@@ -67,18 +64,10 @@ const TodoList = () => {
               <Col className="flex justify-end items-center">
                 {completedTodos.includes(todo._id) ? (
                   <>
-                    <Button disabled className="bg-transparent">
+                    <Button disabled className="bg-transparent mx-2">
                       <FaRegEdit className="text-white text-xl" />
                     </Button>
 
-                    <Button
-                      className="mx-1"
-                      variant="success"
-                      disabled
-                      onClick={() => completeTask(todo?._id)}
-                    >
-                      Complete
-                    </Button>
                     <Button
                       variant="danger"
                       onClick={() => deleteTask(todo?._id)}
