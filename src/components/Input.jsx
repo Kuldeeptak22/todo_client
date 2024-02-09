@@ -35,6 +35,7 @@ const Input = ({ edit }) => {
         dispatch(getTodosAction());
       }
     }
+    dispatch(getTodosAction());
   };
 
   useEffect(() => {
